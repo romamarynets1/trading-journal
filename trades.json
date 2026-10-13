@@ -1,0 +1,34 @@
+[
+  {
+    "pair": "EURUSD",
+    "result": -100
+  },
+  {
+    "pair": "GER40",
+    "result": -100
+  },
+  {
+    "pair": "EURUSD",
+    "result": 0
+  },
+  {
+    "pair": "US100",
+    "result": -100
+  },
+  {
+    "pair": "GBPUSD",
+    "result": -100
+  },
+  {
+    "pair": "AUDUSD",
+    "result": 200
+  },
+  {
+    "pair": "XAUUSD",
+    "result": -100
+  },
+  {
+    "pair": "EURUSD",
+    "result": 200.0
+  }
+]
