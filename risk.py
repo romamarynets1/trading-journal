@@ -1,7 +1,7 @@
 deposit = float(input("Депозит ($): "))
 risk_percent = float(input("Ризик на угоду (%): "))
 risk_amount = deposit * risk_percent / 100
-print("Ти ризикуєш:", risk_amout, "$")
+print("Ти ризикуєш:", risk_amount, "$")
 if risk_percent > 2:
     print("Увага: ризик більше 2% на угоду")
 else:
