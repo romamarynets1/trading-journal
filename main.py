@@ -1,5 +1,5 @@
 import sqlite3
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from datetime import date
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
@@ -87,4 +87,15 @@ def get_stats_by_pair():
     rows = cur.fetchall()
     conn.close()
     return [dict(row) for row in rows]
+@app.delete("/trades/{trade_id}")
+def delete_trade(trade_id: int):
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM trades WHERE id = ?", (trade_id,))
+    conn.commit()
+    deleted = cur.rowcount
+    conn.close()
+    if deleted == 0:
+        raise HTTPException(status_code=404, detail="Угоду не знайдено")
+    return {"deleted": trade_id}
 app.mount("/app", StaticFiles(directory="static", html=True), name="static")

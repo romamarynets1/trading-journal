@@ -7,6 +7,14 @@
 <body>
    <h1>Торговий журнал</h1>
    <p id="stats">Завантаження...</p>
+   <h2>Нова угода</h2>
+<form id="trade-form">
+  <input id="pair" placeholder="Пара, напр. EURUSD" required>
+  <input id="result" type="number" step="any" placeholder="Результат" required>
+  <input id="date" type="date">
+  <button type="submit">Додати</button>
+</form>
+<p id="msg"></p>
    <h2>Угоди</h2>
   <table border="1" cellpadding="6">
     <thead>
@@ -37,7 +45,30 @@
         tbody.appendChild(tr);
       }
     }
+document.getElementById("trade-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const body = {
+    pair: document.getElementById("pair").value,
+    result: parseFloat(document.getElementById("result").value),
+  };
+  const date = document.getElementById("date").value;
+  if (date) body.trade_date = date;
 
+  const res = await fetch("/trades", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(body),
+  });
+
+  const msg = document.getElementById("msg");
+  if (res.ok) {
+    msg.textContent = "Угоду додано";
+    e.target.reset();
+    load();
+  } else {
+    msg.textContent = "Помилка: перевір дані";
+  }
+});
     load();
   </script>
 </body>
