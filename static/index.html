@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+   <meta charset="UTF-8">
+   <title>Торговий журнал</title>
+</head>
+<body>
+   <h1>Торговий журнал</h1>
+   <p id="stats">Завантаження...</p>
+   <h2>Угоди</h2>
+  <table border="1" cellpadding="6">
+    <thead>
+      <tr><th>Дата</th><th>Пара</th><th>Результат</th></tr>
+    </thead>
+    <tbody id="trades"></tbody>
+  </table>
+
+  <script>
+    async function load() {
+      const statsRes = await fetch("/stats");
+      const stats = await statsRes.json();
+      document.getElementById("stats").textContent =
+        "Угод: " + stats.trades + " | Результат: " + stats.total + " | Winrate: " + stats.winrate + "%";
+
+      const tradesRes = await fetch("/trades");
+      const trades = await tradesRes.json();
+      const tbody = document.getElementById("trades");
+      tbody.innerHTML = "";
+
+      for (const t of trades) {
+        const tr = document.createElement("tr");
+        for (const value of [t.trade_date, t.pair, t.result]) {
+          const td = document.createElement("td");
+          td.textContent = value;
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>

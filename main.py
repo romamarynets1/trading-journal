@@ -2,6 +2,7 @@ import sqlite3
 from fastapi import FastAPI
 from datetime import date
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
 app = FastAPI()
 def get_conn():
     conn = sqlite3.connect("trades.db")
@@ -86,3 +87,4 @@ def get_stats_by_pair():
     rows = cur.fetchall()
     conn.close()
     return [dict(row) for row in rows]
+app.mount("/app", StaticFiles(directory="static", html=True), name="static")
