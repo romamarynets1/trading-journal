@@ -1,3 +1,5 @@
 trades.db
 journal.db
 *.db
+fetch_log.txt
+__pycache__/
